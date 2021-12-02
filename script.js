@@ -31,7 +31,8 @@ function displayLibrary (library) {
 function createTable() {
     const library = document.createElement('table');
     library.classList.add("library");
-    const tableHead = addRow("Title", "Author", "Pages", "Read")
+    const tableHead = addRow("Title", "Author", "Pages", "Status")
+    tableHead.classList.add('header');
     library.appendChild(tableHead);
     return library;   
 }
