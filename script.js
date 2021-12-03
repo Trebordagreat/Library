@@ -6,6 +6,11 @@ addBookToLibrary('The Hobbit', 'Tolkine', '256', 'read');
 addBookToLibrary('Whatever', 'Me', '1', 'not read');
 displayLibrary(myLibrary);
 
+const inputBook = document.createElement('button');
+inputBook.textContent = "NEW BOOK";
+inputBook.addEventListener('click', updateLibrary)
+content.appendChild(inputBook);
+
 function Book(title, author, pages, read) {
   // the constructor...
   this.title = title
@@ -18,7 +23,18 @@ function addBookToLibrary(title, author, pages, read) {
   // do stuff here
   const newBook = new Book(title, author, pages, read);
   myLibrary.push(newBook);
+  
 }
+
+function updateLibrary () {
+    title = prompt("What is the title of the book?");
+    author = prompt("Who wrote authored the book?");
+    pages = prompt("How many pages are in the book?");
+    read = prompt("Have you read the book?");
+    addBookToLibrary(title, author, pages, read);
+    const addedBook = addRow(title, author, pages, read);
+    libraryTemplate.appendChild(addedBook);  
+};
 
 function displayLibrary (library) {
     for (let i = 0; i < library.length; i++) {
