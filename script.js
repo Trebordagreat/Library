@@ -2,13 +2,12 @@ let myLibrary = [];
 const content = document.querySelector('.main');
 let libraryTemplate = createTable();
 content.appendChild(libraryTemplate);
-addBookToLibrary('The Hobbit', 'Tolkine', '256', true);
-addBookToLibrary('Whatever', 'Me', '1', 'not read');
 displayLibrary(myLibrary);
 
 const inputBook = document.createElement('button');
 inputBook.textContent = "NEW BOOK";
 inputBook.addEventListener('click', updateLibrary)
+inputBook.classList.add('inputBook');
 content.appendChild(inputBook); 
 
 function Book(title, author, pages, read, index) {
@@ -31,7 +30,7 @@ function updateLibrary () {
     title = prompt("What is the title of the book?");
     author = prompt("Who wrote authored the book?");
     pages = prompt("How many pages are in the book?");
-    read = prompt("Have you read the book?");
+    read = confirm("Have you read the book?");
     addBookToLibrary(title, author, pages, read);
     const addedBook = addRow(title, author, pages, read);
     libraryTemplate.appendChild(addedBook);
@@ -57,6 +56,10 @@ function createTable() {
     const tableHead = addRow("Title", "Author", "Pages", "Status")
     tableHead.classList.add('header');
     tableHead.classList.remove('book');
+    const options = document.createElement('td');
+    options.setAttribute('colspan', '2');
+    options.textContent = "Options";
+    tableHead.appendChild(options);
     library.appendChild(tableHead);
     return library;   
 }
