@@ -2,7 +2,7 @@ let myLibrary = [];
 const content = document.querySelector('.main');
 let libraryTemplate = createTable();
 content.appendChild(libraryTemplate);
-addBookToLibrary('The Hobbit', 'Tolkine', '256', 'read');
+addBookToLibrary('The Hobbit', 'Tolkine', '256', true);
 addBookToLibrary('Whatever', 'Me', '1', 'not read');
 displayLibrary(myLibrary);
 
@@ -45,6 +45,7 @@ function displayLibrary (library) {
         const book = library[i];
         const newBook = addRow(book.title, book.author, book.pages, book.read);
         newBook.classList.add(`${ i }`)
+        newBook.appendChild(addReadToggle(i));
         newBook.appendChild(addRemoveButton(i));
         libraryTemplate.appendChild(newBook);
     }
@@ -77,13 +78,19 @@ function addRow(bookTitle, bookAuthor, bookPages, bookRead, index) {
     row.appendChild(pages);
 
     const read = document.createElement('td');
-    read.textContent = bookRead;
+    if (bookRead === true) {
+        read.textContent = "Read";
+    }
+    else if (bookRead === "Status") {
+        read.textContent = "Read Status";
+    }
+    else {
+        read.textContent = "Not Read";
+    }
     row.appendChild(read);
 
     return row;
 }
-
-addRow.prototype = Object.create(Book.prototype);
 
 function addRemoveButton (index) {
     const removeContainer = document.createElement('td');
@@ -91,12 +98,32 @@ function addRemoveButton (index) {
     removeButton.textContent = "REMOVE";
     removeContainer.appendChild(removeButton);
     removeButton.addEventListener('click', () => {
-        bookId = document.getElementsByClassName(`\\${index}`)
-        console.log(bookId);
         myLibrary.splice(index, 1);   
         displayLibrary(myLibrary);
     });
     return removeContainer;
 };
 
-addRemoveButton.prototype = Object.create(Book.prototype);
+function addReadToggle (index) {
+    const readToggleDiv = document.createElement('td');
+    const readToggleButton = document.createElement('input');
+    readToggleButton.setAttribute('type', 'checkbox');
+    if (myLibrary[index].read === true) {
+        readToggleButton.checked = true;
+    }
+    readToggleDiv.appendChild(readToggleButton);
+    readToggleButton.addEventListener('change', () => {
+        if (!readToggleButton.checked) {
+            myLibrary[index].read = false;
+            readToggleButton.checked = false;
+        }
+        else {
+            myLibrary[index].read = true;
+            readToggleButton.checked = true;
+        }
+
+        displayLibrary(myLibrary);
+    })
+
+    return readToggleDiv;
+}
