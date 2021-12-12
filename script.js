@@ -8,15 +8,15 @@ const inputBook = document.createElement('button');
 inputBook.textContent = "NEW BOOK";
 inputBook.addEventListener('click', updateLibrary)
 inputBook.classList.add('inputBook');
-content.appendChild(inputBook); 
+content.appendChild(inputBook);
 
-function Book(title, author, pages, read, index) {
-  // the constructor...
-  this.title = title
-  this.author = author
-  this.pages = pages
-  this.read = read
-  this.index = index
+class Book {
+    constructor (title, author, pages, read) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read; 
+    }
 }
 
 function addBookToLibrary(title, author, pages, read) {
@@ -64,7 +64,7 @@ function createTable() {
     return library;   
 }
 
-function addRow(bookTitle, bookAuthor, bookPages, bookRead, index) {
+function addRow(bookTitle, bookAuthor, bookPages, bookRead) {
     const row = document.createElement('tr');
     row.classList.add('book');
 
